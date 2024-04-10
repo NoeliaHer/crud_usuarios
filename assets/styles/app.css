@@ -1,3 +1,27 @@
 body {
-    background-color: skyblue;
+    background-color: rgba(227, 231, 232, 0.648);
+}
+
+tr, th, td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.dt-search {
+    text-align: right;
+    padding: 10px;
+}
+
+.dt-buttons{
+    text-align: center;
+}
+
+.dt-info {
+    padding-top: 12px;
+    text-align: center;
+}
+
+.dt-paging {
+    padding-top: 6px;
+    text-align: center;
 }
