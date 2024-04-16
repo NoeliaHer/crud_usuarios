@@ -15,11 +15,19 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Request as HttpRequest; // Alias para evitar conflictos de nombres
+
+
 
 class RegistrationController extends AbstractController
 {
-    public function __construct(private EmailVerifier $emailVerifier)
+
+    private $session;
+
+    public function __construct(private EmailVerifier $emailVerifier, SessionInterface $session)
     {
+        $this->session = $session;
     }
 
     #[Route('/register', name: 'app_register')]
@@ -41,6 +49,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            // Store user data in session
+            $this->session->set('registered_user', $user);
+
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
@@ -51,7 +62,6 @@ class RegistrationController extends AbstractController
             );
 
             // do anything else you need here, like send an email
-
             return $this->redirectToRoute('app_user');
         }
 

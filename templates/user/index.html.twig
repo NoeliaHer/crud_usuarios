@@ -9,12 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hola {{ controller_name }}! ✅</h1>
+    <h1>Hola {{ app.session.get('registered_user').getEmail() }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/X421/proyectos_symfony/proyecto_usuarios/src/Controller/UserController.php</code></li>
-        <li>Your template at <code>C:/Users/X421/proyectos_symfony/proyecto_usuarios/templates/user/index.html.twig</code></li>
-    </ul>
+    <!-- You can access other user properties similarly, for example: -->
+    <p>Tu id es: {{ app.session.get('registered_user').getId() }}</p>  
+    <a href="{{ path('app_logout') }}">Logout</a>
+    
 </div>
 {% endblock %}

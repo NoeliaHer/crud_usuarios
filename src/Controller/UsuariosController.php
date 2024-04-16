@@ -19,9 +19,11 @@ class UsuariosController extends AbstractController
     #[Route('/', name: 'app_usuarios_index', methods: ['GET'])]
     public function index(UsuariosRepository $usuariosRepository): Response
     {
+
         return $this->render('usuarios/index.html.twig', [
             'usuarios' => $usuariosRepository->findBy(['estado' => true])
         ]);
+
     }
 
     // #[Route('/', name: 'app_usuarios_index', methods: ['GET'])]
@@ -79,15 +81,20 @@ class UsuariosController extends AbstractController
     }
 
     // función delete modificada para no borrar, si no cambiar el estado
-    #[Route('/{id}', name: 'app_usuarios_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_usuarios_delete', methods: ['DELETE'])]
     public function delete(Request $request, Usuarios $usuario, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$usuario->getId(), $request->getPayload()->get('_token'))) {
+        $token = $request->request->get('_token');
+
+        if ($this->isCsrfTokenValid('delete'.$usuario->getId(), $token)) {
             $usuario->setEstado(false);
             $entityManager->flush();
+
+            return new JsonResponse(['message' => 'Usuario eliminado correctamente'], Response::HTTP_OK);
+
         }
 
-        return $this->redirectToRoute('app_usuarios_index', [], Response::HTTP_SEE_OTHER);
+        return new JsonResponse(['error' => 'Token CSRF no válido'], Response::HTTP_BAD_REQUEST);
     }
 
     // #[Route('/{id}', name: 'app_usuarios_delete', methods: ['POST'])]
