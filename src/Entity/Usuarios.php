@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UsuariosRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Ciudades;
 
 #[ORM\Entity(repositoryClass: UsuariosRepository::class)]
 class Usuarios
@@ -22,8 +23,8 @@ class Usuarios
     #[ORM\Column(length: 60)]
     private ?string $apellidos = null;
 
-    #[ORM\Column(length: 25)]
-    private ?string $ciudad = null;
+    #[ORM\ManyToOne(targetEntity: Ciudades::class)]
+    private ?Ciudades $ciudad = null;
 
     #[ORM\Column(type: "boolean")]
     private ?bool $estado = true;
@@ -85,12 +86,12 @@ class Usuarios
         return $this;
     }
 
-    public function getCiudad(): ?string
+    public function getCiudad(): ?Ciudades
     {
         return $this->ciudad;
     }
 
-    public function setCiudad(string $ciudad): static
+    public function setCiudad(?Ciudades $ciudad): static
     {
         $this->ciudad = $ciudad;
 

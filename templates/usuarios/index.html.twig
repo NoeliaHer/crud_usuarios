@@ -29,12 +29,11 @@
                 <td>{{ usuario.dni }}</td>
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellidos }}</td>
-                <td>{{ usuario.ciudad }}</td>
+                <td>{{ usuario.ciudad.nombre }}</td>
                 <td>{{ usuario.direccion }}</td>
                 <td>
                     <a href="{{ path('app_usuarios_show', {'id': usuario.id}) }}">show</a>
                     <a href="{{ path('app_usuarios_edit', {'id': usuario.id}) }}">edit</a>
-                    <button class="btn btn-danger delete-btn" data-id="{{ usuario.id }}" data-url="{{ path('app_usuarios_delete', {'id': usuario.id}) }}">Eliminar</button>
                 </td>
             </tr>
         {% else %}
@@ -65,29 +64,7 @@
             });
 
             table.buttons().container().appendTo($('.col-sm-6:eq(0)', table.table().container()));
-        });
-
-        // Manejar clic en el botón de eliminar
-        $(document).on('click', '.delete-btn', function() {
-            var id = $(this).data('id');
-            var url = $(this).data('url');
-            var token = $(this).data('token');
-
-
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                data: {'_token': token},
-                success: function(response) {
-                    // Actualizar la DataTable o hacer cualquier otra acción necesaria
-                    console.log('Elemento eliminado correctamente');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error al eliminar elemento:', error);
-                }
-            });
-        });
-        
+        }); 
     </script>
  
 {% endblock %}
