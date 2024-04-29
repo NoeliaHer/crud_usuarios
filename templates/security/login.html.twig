@@ -2,6 +2,15 @@
 
 {% block title %}Acceder{% endblock %}
 
+{% block navbar %}
+    <nav>
+        <ul>
+            <li><a href="{{ path('app_register') }}">Registro</a></li>
+            <!-- Puedes agregar más elementos de navegación aquí -->
+        </ul>
+    </nav>
+{% endblock %}
+
 {% block body %}
 <div class="form">
     <form method="post">

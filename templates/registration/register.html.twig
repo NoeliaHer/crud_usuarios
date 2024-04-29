@@ -2,6 +2,15 @@
 
 {% block title %}Register{% endblock %}
 
+{% block navbar %}
+    <nav>
+        <ul>
+            <li><a href="{{ path('app_login') }}">Login</a></li>
+            <!-- Puedes agregar más elementos de navegación aquí -->
+        </ul>
+    </nav>
+{% endblock %}
+
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>

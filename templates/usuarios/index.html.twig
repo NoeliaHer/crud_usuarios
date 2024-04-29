@@ -2,6 +2,15 @@
 
 {% block title %}Usuarios {% endblock %}
 
+{% block navbar %}
+    <nav>
+        <ul>
+            <li><a href="{{ path('app_logout') }}">Logout</a></li>
+            <!-- Puedes agregar más elementos de navegación aquí -->
+        </ul>
+    </nav>
+{% endblock %}
+
 {% block body %}
 
     <div class="mb-3">
@@ -34,18 +43,18 @@
                 <td>
                     <a href="{{ path('app_usuarios_show', {'id': usuario.id}) }}">show</a>
                     <a href="{{ path('app_usuarios_edit', {'id': usuario.id}) }}">edit</a>
+                    {{ include('usuarios/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="1">Sin datos</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('app_usuarios_new') }}'">Create new</button>
-    <a href='{{ path('app_logout') }}'">Logout</a>
    
 {% endblock %}
 
@@ -54,6 +63,7 @@
 
     <!-- Inicialización de DataTables -->
     <script>
+    
         $(document).ready(function() {
             // Inicialización de DataTable con botones de exportación
             var table = $('#miTabla').DataTable({
@@ -61,6 +71,7 @@
                 buttons: [
                     'excel', 'pdf', 'print'
                 ]
+
             });
 
             table.buttons().container().appendTo($('.col-sm-6:eq(0)', table.table().container()));

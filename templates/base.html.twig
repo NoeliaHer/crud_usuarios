@@ -21,11 +21,14 @@
         {% endblock %}
     </head>
     <body>
-    <header>
+   <header>
         <nav>
             <ul>
-                <li><a href="{{ path ('app_register') }}">Registro</a></li>
-                <li><a href="{{ path('app_login') }}">Login</a></li>
+                {% block navbar %}
+                    <li><a href="{{ path ('app_register') }}">Registro</a></li>
+                    <li><a href="{{ path('app_login') }}">Login</a></li>
+                    <!-- Aquí puedes agregar más elementos de navegación según sea necesario -->
+                {% endblock %}
             </ul>
         </nav>
     </header>
